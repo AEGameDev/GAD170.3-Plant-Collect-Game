@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Plant : MonoBehaviour
 {
+    // Setting Variables For Plants Stats
     public string species;
     public int dollarValue;
     public float healthPercentage;

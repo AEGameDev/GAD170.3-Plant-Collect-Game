@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 public class RunController : MonoBehaviour
 {
+    // Variables for Accessing Classes, UI, Scoring & Run Count
     public PlantSpawner plantSpawner;
     public Greenhouse greenhouse;
     public PlantCollector plantCollector;
@@ -20,24 +21,24 @@ public class RunController : MonoBehaviour
 
     public void EndRun()
     {
-        // Calculate score for the current run
+        // Calculates Score for Current Run
         int runScore = CalculateRunScore();
         totalScore += runScore;
 
-        // Display the score for the current run
+        // Displays Score For Current Run
         scoreText.text = "Run " + (currentRun + 1) + " Score: " + runScore + "\nTotal Score: " + totalScore;
 
-        // Increment run count
+        // Plus 1 to Run Count
         currentRun++;
 
+        // If Current Run is Less than Total Runs Possible Start New Run After Short Delay
         if (currentRun < totalRuns)
         {
-            // Start a new run after a short delay
             StartCoroutine(StartNewRunAfterDelay(2f));
         }
         else
         {
-            // All runs completed, display final score
+            // If Total Runs Possible Reached (5) Update Text 
             scoreText.text += "\nFinal Run Complete! Final Score: " + totalScore;
         }
     }
@@ -48,21 +49,19 @@ public class RunController : MonoBehaviour
         StartNewRun();
     }
 
+    // This Destroys Plants from Previous Run, Resets Greenhouse, Resets Plant Collector & Spawns New Plants for New Run
     void StartNewRun()
     {
-        // Destroy plants from the previous run
         plantSpawner.DestroySpawnedPlants();
 
-        // Reset the greenhouse for the new run
         greenhouse.ResetGreenhouse();
 
-        // Reset the plant collector for the new run
         plantCollector.ResetCollector();
 
-        // Spawn new plants
         plantSpawner.SpawnPlants();
     }
 
+    // Calcultes and Returns Run Score Based of Value of Plant * Remaing Health / 100
     int CalculateRunScore()
     {
         int runScore = 0;

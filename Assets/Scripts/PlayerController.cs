@@ -6,18 +6,24 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    public TextMeshProUGUI healthText; // Reference to the UI Text element for displaying health
+    // Refrence to UI Text that Displays Plant Health
+    public TextMeshProUGUI healthText;
+
+    // Referncing PlantCollector Class
     private PlantCollector plantCollector;
 
     void Start()
     {
+        // Getting PlantCollector Class
         plantCollector = GetComponent<PlantCollector>();
+
+        // Using Funtions to Update UI Displaying Health
         UpdateHealthUI();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the collided object has the tag "Obstacle"
+        // Checks if Player is Colliding with Object Tagged as Obstacle, If Player Collides, Plant Takes Damage Based on Base Damage * Fargility of Current Plant
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             if (plantCollector != null && plantCollector.carryingPlant)
@@ -26,7 +32,6 @@ public class PlayerController : MonoBehaviour
 
                 if (currentPlant != null)
                 {
-                    // Example damage value, you can adjust this based on the obstacle's properties
                     float damage = 10f;
                     currentPlant.healthPercentage -= damage * currentPlant.fragility;
 
@@ -35,12 +40,13 @@ public class PlayerController : MonoBehaviour
                         currentPlant.healthPercentage = 0;
                     }
 
-                    UpdateHealthUI(); // Update the health display
+                    UpdateHealthUI(); 
                 }
             }
         }
     }
 
+    // Function to Update UI Displaying Health %
     void UpdateHealthUI()
     {
         if (plantCollector.currentPlant != null)
